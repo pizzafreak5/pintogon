@@ -90,6 +90,8 @@ struct thread
     int priority;                       /* Priority. */
     struct list_elem allelem;           /* List element for all threads list. */
 
+    int recent_cpu = -1;                /*Use for calculating thread priority value*/
+
     /* Shared between thread.c and synch.c. */
     struct list_elem elem;              /* List element. */
 

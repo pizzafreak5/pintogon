@@ -92,8 +92,21 @@ timer_sleep (int64_t ticks)
   int64_t start = timer_ticks ();
 
   ASSERT (intr_get_level () == INTR_ON);
-  while (timer_elapsed (start) < ticks) 
-    thread_yield ();
+
+  /* Changed by Garrett*/
+
+  thread_current()->sleep_ticks = ticks;
+
+  //Disable interrupts for thread block
+  enum intr_level old_level = disable_intr();
+
+  thread_block();
+
+  //resotre interupt level
+  intr_set_level(old_level);
+
+  //End Garrett section
+
 }
 
 /* Sleeps for approximately MS milliseconds.  Interrupts must be
@@ -170,9 +183,38 @@ timer_print_stats (void)
 static void
 timer_interrupt (struct intr_frame *args UNUSED)
 {
+  //Original code
   ticks++;
   thread_tick ();
+
+  //Note: Interrupts are disabled, as this is an interrupt handler
+  //This function call sends wake_threads() to each thread
+  thread_foreach(wake_threads, 0);
+  //Garrett End
 }
+
+//Garrett Start
+/*
+ * This function wakes a sleeping thread.
+ * If the thread is being blocked, and the thread's
+ * sleep_ticks, unblock the thread.
+ */
+static void
+wake_threads(struct thread *t, void *aux)
+{
+  if (t->status == THREAD_BLOCKED)
+  {
+    if (t->sleep_ticks > 0)
+    {
+      t->sleep_ticks--;
+      if(t->sleep_ticks == 0)
+      {
+        thread_unblock(t);
+      }
+    }
+  }
+}
+//Garrett End
 
 /* Returns true if LOOPS iterations waits for more than one timer
    tick, otherwise false. */

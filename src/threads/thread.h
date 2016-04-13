@@ -5,6 +5,8 @@
 #include <list.h>
 #include <stdint.h>
 
+/*Bullshit change to demonstrate git to G, TODO delete later*/
+
 /* States in a thread's life cycle. */
 enum thread_status
   {
@@ -90,6 +92,7 @@ struct thread
     int priority;                       /* Priority. */
     struct list_elem allelem;           /* List element for all threads list. */
     uint64_t sleep_time;                /* Garrett: time to sleep in ticks */
+
 
     /* Shared between thread.c and synch.c. */
     struct list_elem elem;              /* List element. */

@@ -353,6 +353,13 @@ thread_get_priority (void)
   return thread_current ()->priority;
 }
 
+/* Recalculates and sets the current thread's priority*/
+int
+thread_calc_priority(void)
+{
+	/* TODO: write this function */
+}
+
 /* Sets the current thread's nice value to NICE. */
 void
 thread_set_nice (int nice UNUSED) 

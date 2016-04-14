@@ -91,7 +91,7 @@ struct thread
     uint8_t *stack;                     /* Saved stack pointer. */
     int priority;                       /* Priority. */
     struct list_elem allelem;           /* List element for all threads list. */
-    uint64_t sleep_time;                /* Garrett: time to sleep in ticks */
+    uint64_t sleep_ticks;                /* Garrett: time to sleep in ticks */
 	struct thread* donor;				/* Chris: the thread which donated its priority to this thread*/
 
 

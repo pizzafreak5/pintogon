@@ -37,7 +37,7 @@ static void real_time_delay (int64_t num, int32_t denom);
  * If the thread is being blocked, and the thread's
  * sleep_ticks, unblock the thread.
  */
-static void wake_threads((struct thread*) t, void *aux)
+static void wake_threads(struct thread* t, void *aux)
 {
   if (t->status == THREAD_BLOCKED)
   {
@@ -213,7 +213,7 @@ timer_interrupt (struct intr_frame *args UNUSED)
 
   //Note: Interrupts are disabled, as this is an interrupt handler
   //This function call sends wake_threads() to each thread
-  thread_foreach((thread_action_func) wake_threads, 0);
+  thread_foreach(wake_threads, 0);
   //Garrett End
 }
 

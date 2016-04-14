@@ -355,7 +355,8 @@ thread_get_priority (void)
 
 	while (current->donor != NULL) {
 		current = current->donor;
-		highest = max(current->priority, highest);
+		if (current->priority > highest)
+			highest = current->priority;
 	}
 
 	return highest;

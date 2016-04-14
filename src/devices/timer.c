@@ -30,6 +30,30 @@ static void busy_wait (int64_t loops);
 static void real_time_sleep (int64_t num, int32_t denom);
 static void real_time_delay (int64_t num, int32_t denom);
 
+
+//Garrett Start
+/*
+ * This function wakes a sleeping thread.
+ * If the thread is being blocked, and the thread's
+ * sleep_ticks, unblock the thread.
+ */
+static void wake_threads((struct thread*) t, void *aux)
+{
+  if (t->status == THREAD_BLOCKED)
+  {
+    if (t->sleep_ticks > 0)
+    {
+      t->sleep_ticks--;
+      if(t->sleep_ticks == 0)
+      {
+        thread_unblock(t);
+      }
+    }
+  }
+}
+//Garrett End
+
+
 /* Sets up the timer to interrupt TIMER_FREQ times per second,
    and registers the corresponding interrupt. */
 void
@@ -193,28 +217,7 @@ timer_interrupt (struct intr_frame *args UNUSED)
   //Garrett End
 }
 
-//Garrett Start
-/*
- * This function wakes a sleeping thread.
- * If the thread is being blocked, and the thread's
- * sleep_ticks, unblock the thread.
- */
-static void
-wake_threads((struct thread*) t, void *aux)
-{
-  if (t->status == THREAD_BLOCKED)
-  {
-    if (t->sleep_ticks > 0)
-    {
-      t->sleep_ticks--;
-      if(t->sleep_ticks == 0)
-      {
-        thread_unblock(t);
-      }
-    }
-  }
-}
-//Garrett End
+
 
 /* Returns true if LOOPS iterations waits for more than one timer
    tick, otherwise false. */

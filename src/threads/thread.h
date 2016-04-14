@@ -92,6 +92,7 @@ struct thread
     int priority;                       /* Priority. */
     struct list_elem allelem;           /* List element for all threads list. */
     uint64_t sleep_time;                /* Garrett: time to sleep in ticks */
+	struct thread* donor;				/* Chris: the thread which donated its priority to this thread*/
 
 
     /* Shared between thread.c and synch.c. */

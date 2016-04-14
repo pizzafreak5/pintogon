@@ -365,6 +365,7 @@ thread_get_priority (void)
 int
 thread_calc_priority(void)
 {
+	return thread_current()->priority;
 	/* TODO: write this function */
 }
 

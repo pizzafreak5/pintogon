@@ -26,4 +26,7 @@ void timer_ndelay (int64_t nanoseconds);
 
 void timer_print_stats (void);
 
+/*Garrett*/
+static void wake_threads(struct thread *t, void *aux);
+
 #endif /* devices/timer.h */

@@ -98,7 +98,7 @@ timer_sleep (int64_t ticks)
   thread_current()->sleep_ticks = ticks;
 
   //Disable interrupts for thread block
-  enum intr_level old_level = disable_intr();
+  enum intr_level old_level = intr_disable();
 
   thread_block();
 

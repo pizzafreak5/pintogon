@@ -350,7 +350,15 @@ thread_set_priority (int new_priority)
 int
 thread_get_priority (void) 
 {
-  return thread_current ()->priority;
+	struct thread* current = thread_current();
+	int highest = current->priority;
+
+	while (current->donor != null) {
+		current = current->donor;
+		highest = max(current->priority, highest);
+	}
+
+	return highest;
 }
 
 /* Recalculates and sets the current thread's priority*/

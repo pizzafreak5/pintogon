@@ -353,7 +353,7 @@ thread_get_priority (void)
 	struct thread* current = thread_current();
 	int highest = current->priority;
 
-	while (current->donor != null) {
+	while (current->donor != NULL) {
 		current = current->donor;
 		highest = max(current->priority, highest);
 	}

@@ -216,7 +216,9 @@ lock_try_acquire (struct lock *lock)
 
   success = sema_try_down (&lock->semaphore);
   if (success)
-    lock->holder = thread_current ();
+	  lock->holder = thread_current();
+  else
+	  thread_donate_priority(lock->holder);
   return success;
 }
 

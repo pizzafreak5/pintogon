@@ -370,6 +370,15 @@ thread_calc_priority(void)
 	/* TODO: write this function */
 }
 
+void
+thread_donate_priority(struct thread *t)
+{
+	struct thread* current = thread_current();
+	if (current->priority < t->priority && (t->donor == NULL || t->donor->priority < t->priority))
+		t->donor = current;
+	thread_yield();
+}
+
 /* Sets the current thread's nice value to NICE. */
 void
 thread_set_nice (int nice UNUSED) 
